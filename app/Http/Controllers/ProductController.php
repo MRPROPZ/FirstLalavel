@@ -45,7 +45,7 @@ class ProductController extends Controller
         $tmp->price = $request->input('myprice');
   
         $tmp->save();
-        return redirect('/products')->with('success','New product was created!!');
+        return redirect('/products')->with('Created','create product success!!');
     }
 
     /**
@@ -65,9 +65,11 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id) 
     {
-        //
+        $tmp = \App\Models\Product::find($id);
+
+        return view('edit_product',compact('tmp','id'));
     }
 
     /**
@@ -77,9 +79,15 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
-        //
+        $tmp = \App\Models\Product::find($id);
+        $tmp->name=$request->get('myname');
+        $tmp->detail=$request->get('mydetails');
+        $tmp->price=$request->get('myprice');
+        $tmp->save();
+
+        return redirect('/products')->with('Update','update product successs!!');   
     }
 
     /**
@@ -92,6 +100,8 @@ class ProductController extends Controller
     {
         $tmp = \App\Models\Product::find($id);
         $tmp->delete();
-        return redirect('/products')->with('success',' product has been removed!!');
+        return redirect('/products')->with('Remove','remove product success!!');
+        
     }
 }
+?>
