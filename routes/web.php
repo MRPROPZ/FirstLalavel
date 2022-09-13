@@ -8,9 +8,10 @@ Route::get('/', function () {
     return view('welcome');
 }); */
 
-// create function 
+// index to products page
 Route:: resource('products' , ProductController::class);
 
+// index to create product page
 Route::post('create_product', 'ProductController@store');
 Route::get('/create_product',
 function () {
